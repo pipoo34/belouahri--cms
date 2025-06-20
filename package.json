@@ -39,3 +39,9 @@
     "installId": "72ca1f6f57c5bc592bbc1e2d392695e0c5c1a39ec0626e6d90496e57bdbce0e1"
   }
 }
+"scripts": {
+  "develop": "strapi develop",
+  "start": "strapi start",
+  "build": "strapi build",
+  "strapi": "strapi"
+}
