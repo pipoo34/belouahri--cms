@@ -1,4 +1,4 @@
-// database.ts with TypeScript fixes
+// database.ts with improved error handling
 import path from 'path';
 
 export default ({ env }: { env: any }) => {
@@ -67,6 +67,18 @@ export default ({ env }: { env: any }) => {
       useNullAsDefault: true,
     },
   };
+
+  // Ensure we have a valid client before returning
+  if (!connections[client as keyof typeof connections]) {
+    console.warn(`Invalid database client: ${client}, falling back to sqlite`);
+    return {
+      connection: {
+        client: 'sqlite',
+        ...connections.sqlite,
+        acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
+      },
+    };
+  }
 
   return {
     connection: {
